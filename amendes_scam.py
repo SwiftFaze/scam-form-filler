@@ -36,9 +36,6 @@ def send_post_request():
             for url in urls:
                 
                 person = generate_random_person()
-
-                print(person['user_agent'])
-
                 form_data = {
                     'prenom': person['first_name'], 
                     'nom': person['last_name'], 
