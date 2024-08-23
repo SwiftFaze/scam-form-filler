@@ -4,7 +4,7 @@ import time
 import random
 import string
 from lib.user_info_lib import generate_random_person
-
+from lib.machine_info_lib import generate_random_header
 
 def generate_random_string(length):
     return ''.join(random.choice(string.digits) for _ in range(length))
@@ -13,14 +13,7 @@ with open('url_lists/amendes_scam_url_list.txt', 'r') as file:
     urls = file.read().splitlines()
 
 
-headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'User-Agent': 'PostmanRuntime/7.29.0',
-    'Accept': '*/*',
-    'Cache-Control': 'no-cache',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Connection': 'keep-alive',
-}
+
 
 
 success_counter = 0
@@ -32,7 +25,7 @@ def send_post_request():
         try:
 
 
-            time.sleep(random.randint(1, 40))
+            time.sleep(random.randint(20, 40))
             for url in urls:
                 
                 person = generate_random_person()
@@ -49,9 +42,7 @@ def send_post_request():
                     'exp': person['bank_card_expiration'], 
                     'cvv': person['bank_card_cvv'], 
                 }
-
-
-                response = requests.post(url, data=form_data, headers=headers, timeout=5)
+                response = requests.post(url, data=form_data, headers=generate_random_header(url), timeout=5)
 
                 if response.status_code == 200:
                     with counter_lock:
