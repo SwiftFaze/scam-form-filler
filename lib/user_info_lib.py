@@ -1,14 +1,36 @@
 import names
 from faker import Faker
-
+import random
 fake_fr = Faker('fr_FR')
+
+french_banks = [
+    "BNP Paribas",
+    "Société Générale",
+    "Crédit Agricole",
+    "La Banque Postale",
+    "Crédit Mutuel",
+    "Crédit Lyonnais (LCL)",
+    "Banque Populaire",
+    "Caisse d'Épargne",
+    "AXA Banque",
+    "HSBC France",
+    "ING France",
+    "Boursorama Banque",
+    "Hello bank!",
+    "Fortuneo Banque",
+    "Monabanq",
+    "Orange Bank",
+]
+
+
+
 def generate_random_person():
     person = {
         'first_name': names.get_first_name(),
         'last_name': names.get_last_name(),
     }
     person['full_name'] = person['first_name'] + " " + person['last_name']
-    
+
     dob_day = str(fake_fr.day_of_month())
     dob_month = str(fake_fr.month())
     dob_year = str(fake_fr.year())
@@ -24,8 +46,10 @@ def generate_random_person():
         'telephone': fake_fr.phone_number(),
         'email': fake_fr.free_email(),
         'bank_card_number': fake_fr.credit_card_number(card_type=None),
+        'iban': fake_fr.iban(),
+        'bank_name': random.choice(french_banks),
     })
-    
+
     bank_card_month = fake_fr.credit_card_expire(start="now", end="+10y", date_format="%m")
     bank_card_year = fake_fr.credit_card_expire(start="now", end="+10y", date_format="%y")
     person.update({
